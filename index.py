@@ -6,6 +6,7 @@ from components.histograma import Histrograma
 from components.grafico_rosca import GraficoRosca
 from components.grafico_barras import GraficoBarra
 from dash.dependencies import Input, Output, State
+from components.subplot_regiao import SubPlotRegiao
 from components.card_amenidade import CardAmenidades
 from components.formulario.form import cria_formulario
 from components.grafico_dispercao import GraficoDispersao
@@ -23,6 +24,7 @@ tabela_etapas = TabelaEtapas()
 grafico_barra = GraficoBarra()
 card_amenidades = CardAmenidades()
 grafico_dispersao = GraficoDispersao()
+subplot = SubPlotRegiao()
 
 
 def constroi_card_amenidade(amenidade):
@@ -47,6 +49,8 @@ def constroi_componente_grafico_dispersao(grafico_dispersao):
     return dbc.Col(dbc.Card(dcc.Graph(figure=grafico_dispersao),  body=True),
                    width=12, className="graficos")
 
+def constroi_componente_subplots(subplot_fig):
+    return dbc.Col(dbc.Card(dcc.Graph(figure=subplot_fig)), md=12, className="graficos")
 
 formulario = cria_formulario()
 mapa_brasil_fig = dbc.Row([dcc.Graph(id="map_brasil", figure=mapa.constroi_mapa_brasil())])
@@ -54,6 +58,7 @@ card_histograma = constroi_componente_histograma(histograma=histograma.constroi_
 card_grafico_menor = constroi_componente_grafico_barra(grafico=grafico_barra.controi_grafico_brasil_menor_indice())
 card_grafico_maior = constroi_componente_grafico_barra(grafico=grafico_barra.controi_grafico_brasil_maior_indice())
 card_grafico_dispersao = constroi_componente_grafico_dispersao(grafico_dispersao.constroi_grafico_dispersao_brasil())
+mapa_subplot = constroi_componente_subplots(subplot.constroi_subplot_brasil())
 (quantidade_amenidade_brasil, 
 maior_quantidade_amenidade_brasil,
 menor_quantidade_amenidade_brasil) = card_amenidades.constroi_amenidades_brasil()
@@ -83,7 +88,9 @@ app.layout = dbc.Container(
                 ]),
                 dbc.Row([card_grafico_dispersao], id='tab' ),
                 dbc.Row([card_grafico_maior,card_grafico_menor], id='graficos'),
-                dbc.Row(card_histograma)
+                dbc.Row(card_histograma),
+                dbc.Row(mapa_subplot, id='mapa_subplot'),
+                
         ], fluid=True, id="container")
 
 
@@ -122,7 +129,8 @@ def atualiza_mapa(estado, indice, municipio, peso_p1, peso_p2, modalidade, filtr
 
 @app.callback(
     [Output('graficos', 'children'),
-    Output('histograma', 'figure')],
+    Output('histograma', 'figure'),
+     Output('mapa_subplot', 'children')],
     [State('estado-dropdown', 'value'), 
      State('municipio-dropdown', 'value'),
      State('indice_valores', 'value'),
@@ -134,7 +142,7 @@ def atualiza_mapa(estado, indice, municipio, peso_p1, peso_p2, modalidade, filtr
 )
 def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filtrar):
     if municipio is not None:
-        return [dbc.Col()], histograma.constroi_histograma_municipio(modalidade=modalidade, municipio=municipio)
+        return [dbc.Col()], histograma.constroi_histograma_municipio(modalidade=modalidade, municipio=municipio), dbc.Col()
     if estado is not None:     
         g_estado_maior = grafico_barra.controi_grafico_estado_maior_indice(modalidade=modalidade, 
                                                                            peso_p1=peso_p1,
@@ -150,7 +158,7 @@ def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filt
                                                                            indice_min=indice[0],
                                                                            indice_max=indice[1])
         histograma_amenidade  = histograma.constroi_histograma_estado(estado=estado, modalidade=modalidade)
-        return [constroi_componente_grafico_barra(g_estado_maior), constroi_componente_grafico_barra(g_estado_menor)], histograma_amenidade
+        return [constroi_componente_grafico_barra(g_estado_maior), constroi_componente_grafico_barra(g_estado_menor)], histograma_amenidade, dbc.Col()
     
     g_brasil_maior = grafico_barra.controi_grafico_brasil_maior_indice(modalidade=modalidade, 
                                                                        peso_p1=peso_p1,
@@ -166,7 +174,8 @@ def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filt
     
     histograma_amenidade = histograma.constroi_histograma_brasil(modalidade=modalidade)
     
-    return [constroi_componente_grafico_barra(g_brasil_maior), constroi_componente_grafico_barra(g_brasil_menor)], histograma_amenidade
+    subplot_brasil  = constroi_componente_subplots(subplot.constroi_subplot_brasil(modalidade=modalidade, peso_p1=peso_p1, peso_p2=p2_peso))
+    return [constroi_componente_grafico_barra(g_brasil_maior), constroi_componente_grafico_barra(g_brasil_menor)], histograma_amenidade, subplot_brasil
     
 
 @app.callback(
@@ -231,4 +240,4 @@ def atualiza_tabela_grafico(estado, municipio, indice, peso_p1, peso_p2, modalid
     
 
 if __name__ == '__main__':
-    app.run_server(host="localhost", port="8050")
+    app.run_server(host="localhost", port="8080")

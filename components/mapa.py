@@ -30,8 +30,7 @@ class Mapa:
                     locations="codigo", featureidkey="properties.codigo",
                     projection="mercator",
                     hover_data={'nome'},
-                    scope="south america",
-                    range_color=(0, geometria_indice['indice'].max()), 
+                    range_color=(geometria_indice['indice'].min(), geometria_indice['indice'].max()), 
                     labels={'Indice':'Indice'}
                 )
         

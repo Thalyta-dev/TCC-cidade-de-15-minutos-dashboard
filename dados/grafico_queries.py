@@ -279,7 +279,7 @@ class GraficoQueriesConstantes:
         )
         SELECT 
             regiao, 
-             ST_Union(geometria) as geometria, 
+            ST_AsText(ST_Simplify(ST_Union(geometria), 0.001)) as geometry, 
             avg(indice) as indice
         FROM indice_unidade_federativa
         WHERE codigo_modalidade_transporte =  %(modalidade)s

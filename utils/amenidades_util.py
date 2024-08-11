@@ -10,3 +10,6 @@ class AmenidadeUtil:
 
     def titulo_amenidade_total(self):
         return f'foi da quantidade total de amenidades'
+    
+    def formata_quantidade(self, dados_amenidade):
+        return format(dados_amenidade['quantidade_amenidade'].iloc[0], ',').replace(',', '.')

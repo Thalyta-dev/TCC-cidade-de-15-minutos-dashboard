@@ -28,6 +28,8 @@ class GraficoBarra:
             title=titulo
         )
         
+        fig.update_yaxes(range=[0, dados_grafico['indice'].max()])
+    
         fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
         '''fig.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',  

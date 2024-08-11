@@ -46,6 +46,9 @@ class CardAmenidades:
 
     def __constroi_titulo_amenidades(self, quantidade_total_amenidade, amenidade_mais_comum, amenidade_menos_comum):
         quantidade_total_amenidade['titulo'] = self.amenidades_util.titulo_amenidade_total()
+        quantidade_total_amenidade['quantidade_amenidade'] = self.amenidades_util.formata_quantidade(quantidade_total_amenidade)
         amenidade_mais_comum['titulo'] = self.amenidades_util.titulo_amenidade_mais_comum(amenidade_mais_comum)
+        amenidade_mais_comum['quantidade_amenidade'] = self.amenidades_util.formata_quantidade(amenidade_mais_comum)
         amenidade_menos_comum['titulo'] = self.amenidades_util.titulo_amenidade_menos_comum(amenidade_menos_comum)
+        amenidade_menos_comum['quantidade_amenidade'] = self.amenidades_util.formata_quantidade(amenidade_menos_comum)
         return quantidade_total_amenidade, amenidade_mais_comum, amenidade_menos_comum

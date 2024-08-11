@@ -7,14 +7,12 @@ titulo = "15MinCityInfo"
 texto_explicativo = """ Exploração dos índices de estados e municípios com o conceito de 'cidade de 15 minutos."""
 
 select_estado = dcc.Dropdown(
-                    className="form_elemento",
                     id="estado-dropdown",
                     options=[{"label": i, "value": j} for i, j in FormUtil.dic_estados().items()],
                     value=None,
                     placeholder="Selecione o estado")
 
 select_municipio = dcc.Dropdown(
-                    className="form_elemento",
                     id="municipio-dropdown",
                     value=None,
                     options= [{"label": nome, "value": codigo} for nome, codigo in FormUtil.dic_municipios().items()],
@@ -31,7 +29,6 @@ select_indice = dcc.RangeSlider(
                     marks = {i: str(i) for i in FormUtil.array_indice()})
 
 select_modalidade = dcc.RadioItems(
-                        className="form_elemento",
                         id='modalidade-transporte',
                         value=1,
                         options=[

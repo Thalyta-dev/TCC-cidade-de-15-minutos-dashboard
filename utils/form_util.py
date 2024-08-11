@@ -5,6 +5,8 @@ class FormUtil:
        
     df_estados = pd.read_csv('dataset/estados.csv')
     df_municipios = pd.read_csv('dataset/municipios.csv', encoding='utf-8')
+    df_estados = df_estados.sort_values(by='NOME')
+    df_municipios = df_municipios.sort_values(by='NOME')
     indices = [0, 20, 40, 60, 80, 100]
     
 
