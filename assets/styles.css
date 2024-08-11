@@ -1,0 +1,151 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
+#cointainer{
+  padding-left: 20px; 
+
+}
+
+#cabecalho {
+  display: flex; 
+  align-items: center;
+  width: 50%; 
+  margin-left: 0; 
+}
+
+#titulo_cabecalho {
+  font-size: 60px;
+  float: left;
+  margin-top: 50px
+}
+
+
+#mapa_brasil {
+  height: 80vh;
+}
+
+#form {
+  padding-right: 20px;
+  padding-left: 20px; 
+  padding-top: 10px;
+  padding-bottom: 20px;
+  height: 100vh
+}
+
+.card_body_big_number {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 8rem;
+  color: rgb(11, 95, 3); 
+}
+
+.graficos {
+  padding-top: 6px; 
+  padding-left: 0px
+}
+
+.card_body_big_number_texto {
+  text-align: center;
+}
+
+.card_amenidade {
+  height: 15vh;
+}
+
+.amenidade {
+  padding-top: 4px; 
+  padding-left: 0px;
+}
+
+.tab {
+  padding-top: 6px; 
+  padding-left: 0px;
+}
+.card_body_big_number_texto {
+  text-align: center;
+}
+
+
+.form_elemento {
+  padding-bottom: 15px;
+}
+
+
+html {
+  font-size: 55%;
+}
+body {
+  font-size: 1.3em;
+  line-height: 1;
+  font-family:  "Poppins";
+}
+
+.h4, h4 {
+  font-size: 1.7em;
+  margin-top: 25px !important; 
+  margin-bottom: 25px !important;
+}
+
+
+
+button{
+  margin-top: 40px !important;
+  height: 44px;
+  border-radius: 4px;
+  background-color: #1E1E1E;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #eaeaea;
+}
+
+
+button:hover{
+  background-color: #fcfdfd;
+  border-color: #fcfcfc;
+  color: #E5ECF6;
+}
+
+select {
+  height: 30px;
+  border-radius: 10px;
+  color: #454647;
+  box-shadow: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  background-color:  #E5ECF6;
+}
+
+input {
+  height: 35px;
+  border-radius: 5px;
+  color: #ffffff;
+  box-shadow: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: #454647;
+}
+
+.Select-control, 
+.Select-menu-outer, 
+.is-open .Select-control {
+  background-color:  #E5ECF6;
+  color: #454647;
+  
+}
+
+.Select-value  {
+  color: #ffffff;
+}
+
+.dash-input{
+  border: 1.5px solid #7c7c7c;
+  background-color: #E5ECF6;
+  color: #454647;
+}
+
+.has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label {
+  color: #454647;
+}
