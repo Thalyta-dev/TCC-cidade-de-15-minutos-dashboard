@@ -67,9 +67,6 @@
 }
 
 
-.form_elemento {
-  padding-bottom: 15px;
-}
 
 
 html {
@@ -93,7 +90,7 @@ button{
   margin-top: 40px !important;
   height: 44px;
   border-radius: 4px;
-  background-color: #1E1E1E;
+  background-color: #2C3E50;
   box-shadow: none;
   box-sizing: border-box;
   color: #eaeaea;
@@ -101,9 +98,8 @@ button{
 
 
 button:hover{
-  background-color: #fcfdfd;
-  border-color: #fcfcfc;
-  color: #E5ECF6;
+  background-color: #2a4661;
+
 }
 
 select {
@@ -133,15 +129,16 @@ input {
 .is-open .Select-control {
   background-color:  #E5ECF6;
   color: #454647;
-  
+  border: 1.5px solid #7c7c7c;
 }
 
 .Select-value  {
   color: #ffffff;
+  border: 1.5px solid #7c7c7c;
 }
 
 .dash-input{
-  border: 1.5px solid #7c7c7c;
+  border: 1.5px solid #4e4242;
   background-color: #E5ECF6;
   color: #454647;
 }
