@@ -31,34 +31,32 @@ def constroi_card_amenidade(amenidade):
     return dbc.CardBody([html.Div([html.H1(amenidade['quantidade_amenidade'].iloc[0], className="card_body_big_number"),
                             html.P(amenidade['titulo'].iloc[0], className="card_body_big_number_texto")],)
                          ],)
-def constroi_componente_grafico_barra(grafico):
-    return dbc.Col(dbc.Card(dcc.Graph(figure=grafico)), md=6, className="graficos")
+    
+def constroi_componente_md_4(grafico, id):
+    return dbc.Col(dbc.Card(dcc.Loading(dcc.Graph(figure=grafico, id=id)), className='card'), md=4, className="graficos")
 
-def constroi_componente_histograma(histograma):
-    return dbc.Col(dbc.Card(dcc.Graph(id='histograma', figure=histograma)), md=12, className="graficos")
+def constroi_componente_md_6(grafico, id):
+    return dbc.Col(dbc.Card(dcc.Loading(dcc.Graph(figure=grafico, id=id)), className='card'), md=6, className="graficos")
 
-def constroi_componente_grafico_rosca(grafico):
-    return dbc.Col(dbc.Card(dcc.Graph(id="grafico_rosca_estado", figure=grafico), body=True), 
-                   width=4, className="graficos")
+def constroi_componente_md_8(grafico, id):
+    return dbc.Col(dbc.Card(dcc.Loading(dcc.Graph(id=id, figure=grafico)), className='card'), md=8, className="graficos")
 
-def constroi_componente_tabela(tabela):
-    return dbc.Col(dbc.Card(dcc.Graph(id="tabela_erros_etapa", figure=tabela),  body=True),
-                   width=8, className="graficos")
+def constroi_componente_md_12(grafico, id):
+    return dbc.Col(dbc.Card(dcc.Loading(dcc.Graph(id=id, figure=grafico)), className='card'), md=12, className="graficos")
 
-def constroi_componente_grafico_dispersao(grafico_dispersao):
-    return dbc.Col(dbc.Card(dcc.Graph(figure=grafico_dispersao),  body=True),
-                   width=12, className="graficos")
 
-def constroi_componente_subplots(subplot_fig):
-    return dbc.Col(dbc.Card(dcc.Graph(figure=subplot_fig)), md=12, className="graficos")
 
-formulario = cria_formulario()
+
+formulario = html.Div(cria_formulario(), id='modal_formulario')
 mapa_brasil_fig = dbc.Row([dcc.Graph(id="map_brasil", figure=mapa.constroi_mapa_brasil())])
-card_histograma = constroi_componente_histograma(histograma=histograma.constroi_histograma_brasil(modalidade=1))
-card_grafico_menor = constroi_componente_grafico_barra(grafico=grafico_barra.controi_grafico_brasil_menor_indice())
-card_grafico_maior = constroi_componente_grafico_barra(grafico=grafico_barra.controi_grafico_brasil_maior_indice())
-card_grafico_dispersao = constroi_componente_grafico_dispersao(grafico_dispersao.constroi_grafico_dispersao_brasil())
-mapa_subplot = constroi_componente_subplots(subplot.constroi_subplot_brasil())
+mapa_subplot = constroi_componente_md_12(subplot.constroi_subplot_brasil(), id='subplot')
+card_histograma = constroi_componente_md_12(grafico=histograma.constroi_histograma_brasil(modalidade=1), id='histograma')
+card_grafico_menor = constroi_componente_md_6(grafico=grafico_barra.controi_grafico_brasil_menor_indice(), id='grafico_menor')
+card_grafico_maior = constroi_componente_md_6(grafico=grafico_barra.controi_grafico_brasil_maior_indice(),  id='grafico_maior')
+card_grafico_dispersao = constroi_componente_md_12(grafico_dispersao.constroi_grafico_dispersao_brasil(), id='dispersao')
+amenidade_por_regiao = constroi_componente_md_12(grafico_barra.controi_grafico_amenidade_por_regiao(), id='amenidade')
+card_rosca_hexagonos = constroi_componente_md_4(grafico=grafico_rosca.controi_quantidade_hexagono_analisados_brasil(), id='grafico_rosca_hexagono')
+card_histograma_categoria_amenidade = constroi_componente_md_8(histograma.constroi_histograma_quantidade_amenidades_brasil(), id='histograma_amenidade')
 (quantidade_amenidade_brasil, 
 maior_quantidade_amenidade_brasil,
 menor_quantidade_amenidade_brasil) = card_amenidades.constroi_amenidades_brasil()
@@ -74,22 +72,24 @@ app.layout = dbc.Container(
                 ]),                          
                 dbc.Row([
                     dbc.Col(
-                        dbc.Card(children=constroi_card_amenidade(quantidade_amenidade_brasil), 
-                                 body=True, id="card_amenidade_total", className="card_amenidade"), 
+                        dcc.Loading(children=dbc.Card(children=constroi_card_amenidade(quantidade_amenidade_brasil), 
+                                 body=True, id="card_amenidade_total", className="card_amenidade")), 
                         className="amenidade", width=4),
                     dbc.Col(
-                        dbc.Card(children=constroi_card_amenidade(maior_quantidade_amenidade_brasil), 
-                                 body=True, id="card_amenidade_maior", className="card_amenidade"),
+                        dcc.Loading(dbc.Card(children=constroi_card_amenidade(maior_quantidade_amenidade_brasil), 
+                                 body=True, id="card_amenidade_maior", className="card_amenidade")),
                         className="amenidade", width=4),
                     dbc.Col(
-                        dbc.Card(children=constroi_card_amenidade(menor_quantidade_amenidade_brasil),
-                                 body=True, id="card_amenidade_menor", className="card_amenidade"), 
+                        dcc.Loading(dbc.Card(children=constroi_card_amenidade(menor_quantidade_amenidade_brasil),
+                                 body=True, id="card_amenidade_menor", className="card_amenidade")), 
                         className="amenidade", width=4),
                 ]),
-                dbc.Row([card_grafico_dispersao], id='tab' ),
+                dbc.Row([card_grafico_dispersao], id='tab'),  
                 dbc.Row([card_grafico_maior,card_grafico_menor], id='graficos'),
-                dbc.Row(card_histograma),
-                dbc.Row(mapa_subplot, id='mapa_subplot'),
+                dbc.Row(card_histograma ),
+                dbc.Row([card_histograma_categoria_amenidade, card_rosca_hexagonos], id='graficos_inferior'),
+                dbc.Row(dcc.Loading(mapa_subplot), id='mapa_subplot'),
+                dbc.Row(dcc.Loading(amenidade_por_regiao), id='amenidade_regiao'),
                 
         ], fluid=True, id="container")
 
@@ -158,7 +158,7 @@ def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filt
                                                                            indice_min=indice[0],
                                                                            indice_max=indice[1])
         histograma_amenidade  = histograma.constroi_histograma_estado(estado=estado, modalidade=modalidade)
-        return [constroi_componente_grafico_barra(g_estado_maior), constroi_componente_grafico_barra(g_estado_menor)], histograma_amenidade, dbc.Col()
+        return [constroi_componente_md_6(g_estado_maior, id='grafico_maior'), constroi_componente_md_6(g_estado_menor, id='grafico_menor')], histograma_amenidade, dbc.Col()
     
     g_brasil_maior = grafico_barra.controi_grafico_brasil_maior_indice(modalidade=modalidade, 
                                                                        peso_p1=peso_p1,
@@ -174,8 +174,8 @@ def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filt
     
     histograma_amenidade = histograma.constroi_histograma_brasil(modalidade=modalidade)
     
-    subplot_brasil  = constroi_componente_subplots(subplot.constroi_subplot_brasil(modalidade=modalidade, peso_p1=peso_p1, peso_p2=p2_peso))
-    return [constroi_componente_grafico_barra(g_brasil_maior), constroi_componente_grafico_barra(g_brasil_menor)], histograma_amenidade, subplot_brasil
+    subplot_brasil  = constroi_componente_md_12(subplot.constroi_subplot_brasil(modalidade=modalidade, peso_p1=peso_p1, peso_p2=p2_peso), id='subplot')
+    return [constroi_componente_md_6(g_brasil_maior, id='grafico_maior'), constroi_componente_md_6(g_brasil_menor,  id='grafico_menor')], histograma_amenidade, subplot_brasil
     
 
 @app.callback(
@@ -228,16 +228,45 @@ def update_cards_amenidade(estado, municipio, filtrar):
 def atualiza_tabela_grafico(estado, municipio, indice, peso_p1, peso_p2, modalidade, filtrar):
     if municipio is not None:
         return None
-    if estado is not None:     
-        return [constroi_componente_tabela(tabela=tabela_etapas.constroi_tabela_municipio(estado=estado)), 
-                constroi_componente_grafico_rosca(grafico=grafico_rosca.constroi_grafico_rosca_estado(estado=estado))]
+    if estado is not None:      
+        return [constroi_componente_md_8(tabela_etapas.constroi_tabela_municipio(estado=estado), id='tabela'), 
+                constroi_componente_md_4(grafico=grafico_rosca.controi_municipio_analisados(estado=estado), id='grafico_rosca')]
         
-    return constroi_componente_grafico_dispersao(grafico_dispersao.constroi_grafico_dispersao_brasil(modalidade=modalidade,
+    return constroi_componente_md_12(grafico_dispersao.constroi_grafico_dispersao_brasil(modalidade=modalidade,
                                                      indice_min=indice[0],
                                                      indice_max=indice[1],
                                                      peso_p1=peso_p1, 
-                                                     peso_p2=peso_p2))
+                                                     peso_p2=peso_p2), id='grafico_dispersao')
     
+
+@app.callback( 
+    Output('graficos_inferior', 'children'),
+    Output('amenidade_regiao', 'children'),
+    [State('estado-dropdown', 'value'), 
+     State('municipio-dropdown', 'value'),
+     State('indice_valores', 'value'),
+     State('indice_amenidade', 'value'), 
+     State('indice_variedade_amenidade', 'value'),  
+     State('modalidade-transporte', 'value'),
+     Input('button','n_clicks'),
+]
+)
+def atualiza_histograma_pizza(estado, municipio, indice, peso_p1, peso_p2, modalidade, filtrar):
+    if municipio is not None:
+        card_histograma_categoria_amenidade = constroi_componente_md_12(histograma.constroi_histograma_quantidade_amenidades_municipio(municipio), id='histograma_amenidade')
+        #card_rosca_hexagonos = constroi_componente_grafico_rosca(grafico=grafico_rosca.controi_quantidade_hexagono_analisados_municipio(municipio), id='grafico_rosca_hexagono')
+        return [card_histograma_categoria_amenidade], dbc.Col()
+    if estado is not None:     
+        card_histograma_categoria_amenidade = constroi_componente_md_12(histograma.constroi_histograma_quantidade_amenidades_estado(estado), id='histograma_amenidade')
+        #card_rosca_hexagonos = constroi_componente_grafico_rosca(grafico=grafico_rosca.controi_quantidade_hexagono_analisados_estado(estado), id='grafico_rosca_hexagono')
+        return [card_histograma_categoria_amenidade], dbc.Col()
+    
+    card_rosca_hexagonos = constroi_componente_md_4(grafico=grafico_rosca.controi_quantidade_hexagono_analisados_brasil(), id='grafico_rosca_hexagono')
+    card_histograma_categoria_amenidade = constroi_componente_md_8(histograma.constroi_histograma_quantidade_amenidades_brasil(), id='histograma_amenidade')
+
+
+    return [card_histograma_categoria_amenidade, card_rosca_hexagonos], [amenidade_por_regiao]
+
 
 if __name__ == '__main__':
     app.run_server(host="localhost", port="8080")

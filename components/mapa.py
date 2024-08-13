@@ -20,35 +20,65 @@ class Mapa:
         
         logger.info(f'Construindo mapa')
 
-        geometria_indice = self.mapaUtil.convert_gfd(dataframe=geometria_indice)
 
-        geometria_indice.fillna(-1, inplace=True)
+        geometria_indice = self.mapaUtil.convert_gfd(dataframe=geometria_indice)        
+        geometria_com_dados_nan = geometria_indice[geometria_indice.isna().any(axis=1)]
+        
         logger.info(f'Plotando mapa')
+        
+        fig_geometrias_cinzas = plot.choropleth(
+            data_frame=geometria_com_dados_nan,
+            geojson=geometria_com_dados_nan,
+            featureidkey="properties.codigo",
+            locations="codigo",
+            projection="mercator",
+            hover_data={'nome'},
+            color_discrete_sequence=["gray"]
+        )
 
-        fig = plot.choropleth(geometria_indice, geojson=geometria_indice[['geometry', 'indice', 'nome', 'codigo']],
+        fig_geometrias_indice = plot.choropleth(geometria_indice, 
+                                                geojson=geometria_indice[['geometry', 'indice', 'nome', 'codigo']],
                     color="indice",
-                    locations="codigo", featureidkey="properties.codigo",
+                    locations="codigo", 
+                    featureidkey="properties.codigo",
                     projection="mercator",
                     hover_data={'nome'},
                     range_color=(geometria_indice['indice'].min(), geometria_indice['indice'].max()), 
-                    labels={'Indice':'Indice'}
+                    labels={'Índice':'Índice'}
                 )
-        
-        fig.update_geos(fitbounds="locations", 
+        fig = go.Figure()
+
+        for trace in fig_geometrias_cinzas.data:
+            fig.add_trace(trace)
+
+        for trace in fig_geometrias_indice.data:
+            fig.add_trace(trace)
+            
+        fig.update_geos(fitbounds="locations", projection_scale=12,
                         visible=False,)
-        
+
         fig.update_layout(
-            dragmode=False,  
+            showlegend=False,
+            dragmode=False,
+            paper_bgcolor='rgba(0,0,0,0)',           
+            plot_bgcolor='rgba(0,0,0,0)',           
             hovermode='closest',
-            coloraxis_colorbar={'len': 0.5,'yanchor': 'middle','y': 0.5},
+            coloraxis_colorbar=dict(
+                len=0.5,
+                yanchor='middle',
+                y=0.5,
+                xanchor='left',
+                x=1.02,
+            ),
+            autosize=False,
             width=1200,
             height=900,
+            margin=dict(l=0, r=0, t=0, b=0)
         )
-        
         logger.info(f'Mapa construido')
         return  fig
     
-    def constroi_mapa_brasil(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100):
+    def constroi_mapa_brasil(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando  informações para gerar mapa do Brasil')
         

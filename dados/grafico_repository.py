@@ -53,15 +53,36 @@ class RepositoryGrafico:
     def busca_hexagono_analisados(self, municipio):
         return read_sql(sql=GraficoQueriesConstantes.HEXAGONO_ANALISADOS_MUNICIPIOS, con=self.conexao_bd, params={ 'municipio': municipio}) 
 
+    def busca_hexagono_analisados_brasil(self, modalidade):
+        return read_sql(sql=GraficoQueriesConstantes.HEXAGO_CALCULADOS_BRASIL, con=self.conexao_bd, params={ 'modalidade': modalidade}) 
+
+    def busca_hexagono_analisados_estado(self, modalidade, estado):
+        return read_sql(sql=GraficoQueriesConstantes.HEXAGO_CALCULADOS_BRASIL, con=self.conexao_bd, params={ 'modalidade': modalidade}) 
+
+    def busca_hexagono_analisados_municipio(self, modalidade, municipio):
+        return read_sql(sql=GraficoQueriesConstantes.HEXAGO_CALCULADOS_BRASIL, con=self.conexao_bd, params={ 'modalidade': modalidade}) 
+
     def busca_status_etapas_municipios(self, estado):
         return read_sql(sql=GraficoQueriesConstantes.STATUS_ETAPA_ESTADO, con=self.conexao_bd, params={ 'estado': estado})  
 
     def busca_amenidade(self, modalidade):
             return read_sql(sql=GraficoQueriesConstantes.BUSCA_AMENIDADE, con=self.conexao_bd,  params={ 'modalidade': modalidade})  
       
+    def busca_quantidade_amedidade_por_categoria(self):
+            return read_sql(sql=GraficoQueriesConstantes.BUSCA_QUANTIDADE_AMENIDADE_CATEGORIA, con=self.conexao_bd)  
+    
+    def busca_quantidade_amedidade_por_categoria_estado(self, estado):
+            return read_sql(sql=GraficoQueriesConstantes.BUSCA_QUANTIDADE_AMENIDADE_CATEGORIA_ESTADO, con=self.conexao_bd, params={ 'estado': estado})  
+    
+    def busca_quantidade_amedidade_por_categoria_municipio(self, municipio):
+            return read_sql(sql=GraficoQueriesConstantes.BUSCA_QUANTIDADE_AMENIDADE_CATEGORIA_MUNICIPIO, con=self.conexao_bd, params={ 'municipio': municipio})  
+    
     def busca_amenidade_estado(self, estado, modalidade):
             return read_sql(sql=GraficoQueriesConstantes.BUSCA_AMENIDADE_ESTADO, con=self.conexao_bd, params={ 'estado': estado, 'modalidade': modalidade})    
     
     def busca_amenidade_municipio(self, municipio, modalidade):
             return read_sql(sql=GraficoQueriesConstantes.BUSCA_AMENIDADE_MUNICIPIO, con=self.conexao_bd, params={ 'municipio': municipio, 'modalidade': modalidade})
+    
+    def busca_amenidade_por_regiao(self):
+            return read_sql(sql=GraficoQueriesConstantes.AMENIDADE_POR_REGIAO, con=self.conexao_bd)
     

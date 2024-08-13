@@ -40,11 +40,9 @@ class SubPlotRegiao:
             ('Centro-oeste', 1, 4),
             ('Sul', 1, 5)
         ]
-        
-        
+                
         for nome_regiao, row, col in regions:
-            geometria_region =  df_regioes.copy()
-            geometria_region.loc[df_regioes['regiao'] != nome_regiao, 'indice'] = -1
+            geometria_region = df_regioes[df_regioes['regiao'] == nome_regiao]
             fig2 = plot.choropleth(
                 geometria_region,
                 geojson=geometria_region,
@@ -52,27 +50,27 @@ class SubPlotRegiao:
                 featureidkey="properties.codigo",
                 color='indice',
                 hover_data={'regiao'},
-                color_continuous_scale=plot.colors.sequential.Plasma,
                 range_color=(df_regioes['indice'].min(), df_regioes['indice'].max()), 
                 labels={'indice': 'Índice'},
                 title=nome_regiao
             )
-
-            fig.update_geos(fitbounds="locations", 
-                        visible=False, projection_scale=6, showcountries=True,  
-                        countrycolor='black') 
-        
-            fig.update_layout(
-                dragmode=False,  
-                hovermode='closest')
+            
             fig.add_trace(
                 fig2.data[0],
                 row=row, col=col
             )
         
+        fig.update_geos(fitbounds="locations", 
+                    visible=False, projection_scale=0, showcountries=True,  
+                    countrycolor='black') 
+    
+        fig.update_layout(
+            dragmode=False,  
+            paper_bgcolor='rgba(0,0,0,0)', 
+            hovermode='closest')
         return fig
     
-    def constroi_subplot_brasil(self, modalidade=1, peso_p1=100, peso_p2=100):
+    def constroi_subplot_brasil(self, modalidade=1, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando  informações para gerar subplot das regiões do Brasil')
         

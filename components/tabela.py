@@ -32,12 +32,8 @@ class TabelaEtapas:
                               align='left'))
             ])
             
-            '''fig.update_layout(
-                  title_text="Status de cada etapa de processamento dos municípios",
-                  paper_bgcolor='rgba(0,0,0,0)', 
-                  plot_bgcolor='rgba(0,0,0,0)',
-                  title_font=dict(color='white')
-            )'''
+            fig.update_layout(
+                  title_text="Status de cada etapa de processamento dos municípios", paper_bgcolor='rgba(0,0,0,0)')
 
             logger.info(f' Tabela de etapa de processamento concluida')
 

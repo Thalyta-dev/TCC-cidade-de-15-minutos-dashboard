@@ -31,25 +31,14 @@ class GraficoBarra:
         fig.update_yaxes(range=[0, dados_grafico['indice'].max()])
     
         fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
-        '''fig.update_layout(
-        plot_bgcolor='rgba(0,0,0,0)',  
-        paper_bgcolor='rgba(0,0,0,0)', 
-        font=dict(color='white'), 
-        title_font=dict(color='white'), 
-        xaxis=dict(title_font=dict(color='white'), tickfont=dict(color='white')),
-        yaxis=dict(
-            title_font=dict(color='white'),
-            tickfont=dict(color='white'),
-            nticks=10,
-            range=[0, 100],
-        ), 
-        coloraxis_colorbar=dict(tickfont=dict(color='white'), titlefont=dict(color='white'))  
-        )'''
+        fig.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)'
+        )
         
         logger.info(f'Grafico construido')
         return fig 
         
-    def controi_grafico_brasil_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100):
+    def controi_grafico_brasil_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando informações para gerar grafico maior indice do Brasil')
 
@@ -64,7 +53,7 @@ class GraficoBarra:
         
         return self.__constroi_grafico_barra(indice_brasil, 'Estados com maior Índice de Cidade de 15 minutos')
 
-    def controi_grafico_brasil_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100):
+    def controi_grafico_brasil_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando informações para gerar grafico menor indice do Brasil')
 
@@ -79,7 +68,7 @@ class GraficoBarra:
         
         return self.__constroi_grafico_barra(indice_brasil, 'Estados com menor Índice de Cidade de 15 minutos')
 
-    def controi_grafico_estado_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100, estado= None):
+    def controi_grafico_estado_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado= None):
         
         logger.info(f'Buscando informações para gerar grafico maior indice do estado')
 
@@ -96,7 +85,7 @@ class GraficoBarra:
         
         return self.__constroi_grafico_barra(indice_brasil, 'Municípios com maior Índice de Cidade de 15 minutos')
 
-    def controi_grafico_estado_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100, estado=None):
+    def controi_grafico_estado_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado=None):
         
         logger.info(f'Buscando informações para gerar grafico menor indice do estado')
 
@@ -111,3 +100,44 @@ class GraficoBarra:
         indice_brasil = indice_brasil.head(10)
     
         return self.__constroi_grafico_barra(indice_brasil, 'Municípios com menor Índice de Cidade de 15 minutos')
+    
+    def controi_grafico_amenidade_por_regiao(self):
+        
+        logger.info(f'Buscando informações para gerar grafico amenidade por região ')
+
+        amenidade_por_regiao = self.repository_banco.busca_amenidade_por_regiao()
+        
+        lista_dict_regiao = ({
+            'Centro-oeste': [],
+            'Nordeste': [],
+            'Norte': [],
+            'Sudeste': [],
+            'Sul': []
+        })
+
+        for registro in amenidade_por_regiao.to_numpy():
+            lista_dict_regiao.get(registro[0]).append(registro[2])
+
+        df_amenidade_regiao = DataFrame(lista_dict_regiao, index=['Alimentação', 'Compras e Serviços', 'Cultura, Esportes e Lazer', 'Educação', 'Saúde', 'Trabalho', 'Transporte'])
+    
+        df_amenidade_regiao = df_amenidade_regiao.reset_index().melt(id_vars='index', var_name='Região', value_name='Quantidade')
+        df_amenidade_regiao.rename(columns={'index': 'Categoria'}, inplace=True)
+                
+        fig = plot.bar(
+            df_amenidade_regiao,
+            x='Categoria', 
+            text_auto='.2f',
+            y='Quantidade',
+            color='Região', 
+            barmode='group',
+            labels={'nome': 'Categoria Amenidades', 'quantidade': 'Quantidade Amenidade'},
+            title="Amenidade por região"
+        )
+        
+        fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+        fig.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            height=700
+
+        )
+        return fig
