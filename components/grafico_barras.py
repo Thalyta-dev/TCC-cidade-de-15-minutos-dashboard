@@ -24,7 +24,7 @@ class GraficoBarra:
             text_auto='.2f',
             x='nome', 
             y='indice',
-            labels={'nome': 'Estados', 'indice': 'Índice de cidade de 15 minutos'},
+            labels={'nome': 'Estados', 'indice': 'Índice de Conformidade'},
             title=titulo
         )
         
@@ -51,7 +51,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=False)
         indice_brasil = indice_brasil.head(5)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Estados com maior Índice de Cidade de 15 minutos')
+        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Maiores Índice de Conformidade')
 
     def controi_grafico_brasil_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
@@ -66,7 +66,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=True)
         indice_brasil = indice_brasil.head(5)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Estados com menor Índice de Cidade de 15 minutos')
+        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Menores Índice de Conformidade')
 
     def controi_grafico_estado_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado= None):
         
@@ -83,7 +83,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=False)
         indice_brasil = indice_brasil.head(10)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Municípios com maior Índice de Cidade de 15 minutos')
+        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Maiores Índice de Conformidade')
 
     def controi_grafico_estado_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado=None):
         
@@ -99,7 +99,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=True)
         indice_brasil = indice_brasil.head(10)
     
-        return self.__constroi_grafico_barra(indice_brasil, 'Municípios com menor Índice de Cidade de 15 minutos')
+        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Menores Índice de Conformidade')
     
     def controi_grafico_amenidade_por_regiao(self):
         

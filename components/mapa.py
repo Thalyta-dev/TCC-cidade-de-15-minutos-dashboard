@@ -44,7 +44,7 @@ class Mapa:
                     projection="mercator",
                     hover_data={'nome'},
                     range_color=(geometria_indice['indice'].min(), geometria_indice['indice'].max()), 
-                    labels={'Índice':'Índice'}
+                    labels={'indice':'Índice de Conformidade'}
                 )
         fig = go.Figure()
 
@@ -64,6 +64,8 @@ class Mapa:
             plot_bgcolor='rgba(0,0,0,0)',           
             hovermode='closest',
             coloraxis_colorbar=dict(
+                title=dict(
+                text="Índice"),
                 len=0.5,
                 yanchor='middle',
                 y=0.5,

@@ -36,8 +36,11 @@ class Histrograma:
             }
         )
         
-        fig.update_layout(bargap=0.1, paper_bgcolor='rgba(0,0,0,0)', 
-)
+        fig.update_layout(bargap=0.1,
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            xaxis_title="Categoria de Amenidades",
+                            yaxis_title="Quantidade",)
+        
         fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
 
         fig.update_layout(
@@ -57,7 +60,11 @@ class Histrograma:
         titulo = 'Contagem por subcategoria de amenidade'
         
         fig = self.__constroi_histograma(amenidades_brasil, titulo)
-        fig.update_layout(bargap=0.1,height=900)
+        fig.update_layout(bargap=0.1,
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            xaxis_title="Subcategoria de Amenidades",
+                            yaxis_title="Quantidade",
+                            height=900)
         return fig
     
     def constroi_histograma_estado(self, estado=None, modalidade=1):
@@ -69,6 +76,11 @@ class Histrograma:
         titulo = 'Contagem por subcategoria de amenidade do estado '
         
         fig = self.__constroi_histograma(amenidade_estado, titulo)
+        fig.update_layout(bargap=0.1,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    xaxis_title="Subcategoria de Amenidades",
+                    yaxis_title="Quantidade",
+                    height=900)
         return fig
     
     def constroi_histograma_municipio(self, municipio=None, modalidade=1):
@@ -81,8 +93,13 @@ class Histrograma:
 
         titulo = 'Contagem por subcategoria de amenidade do municipio'
 
-
         fig = self.__constroi_histograma(amenidade_municipio, titulo)
+        
+        fig.update_layout(bargap=0.1,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    xaxis_title="Subcategoria de Amenidades",
+                    yaxis_title="Quantidade",
+                    height=900)
         return fig
 
     def constroi_histograma_quantidade_amenidades_brasil(self):

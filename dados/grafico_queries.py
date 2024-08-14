@@ -269,7 +269,7 @@ class GraficoQueriesConstantes:
             area_km2, 
             geometria,
             flag_calculo_indice_15min,
-            ( %(peso_p1)s * indice_p1 + 1 *  %(peso_p2)s) / (  %(peso_p1)s +  %(peso_p2)s) AS indice
+            ( %(peso_p1)s * indice_p1 + indice_p2 *  %(peso_p2)s) / (  %(peso_p1)s +  %(peso_p2)s) AS indice
         FROM t_indice_unidade_federativa as i 
         INNER JOIN t_unidade_federativa as m 
         ON i.codigo_unidade_federativa = m.codigo

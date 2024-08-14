@@ -4,7 +4,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 titulo = "15MinCityInfo"
-texto_explicativo = """ Exploração dos índices de estados e municípios com o conceito de 'cidade de 15 minutos."""
+texto_explicativo = """ Exploração dos índices de conformidade do país, estados e municípios com o conceito de 'cidade de 15 minutos."""
 
 select_estado = dcc.Dropdown(
                     id="estado-dropdown",
