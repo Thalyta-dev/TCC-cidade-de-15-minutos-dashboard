@@ -105,6 +105,8 @@ app.layout = dbc.Container(
     Input('button','n_clicks'),]
 )
 def atualiza_mapa(estado, indice, municipio, peso_p1, peso_p2, modalidade, filtrar):
+    print(peso_p1)
+    print(peso_p2)
     if municipio is not None:
         return mapa.constroi_mapa_municipio(municipio=municipio,
                                          modalidade=modalidade, 
@@ -141,6 +143,10 @@ def atualiza_mapa(estado, indice, municipio, peso_p1, peso_p2, modalidade, filtr
 ]
 )
 def update_grafico(estado, municipio, indice, peso_p1, p2_peso, modalidade, filtrar):
+    
+    print(peso_p1)
+    print(p2_peso)
+    print(estado)
     if municipio is not None:
         return [dbc.Col()], histograma.constroi_histograma_municipio(modalidade=modalidade, municipio=municipio), dbc.Col()
     if estado is not None:     

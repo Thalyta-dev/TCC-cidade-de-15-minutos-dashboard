@@ -20,7 +20,6 @@ class Mapa:
         
         logger.info(f'Construindo mapa')
 
-
         geometria_indice = self.mapaUtil.convert_gfd(dataframe=geometria_indice)        
         geometria_com_dados_nan = geometria_indice[geometria_indice.isna().any(axis=1)]
         
@@ -80,7 +79,7 @@ class Mapa:
         logger.info(f'Mapa construido')
         return  fig
     
-    def constroi_mapa_brasil(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
+    def constroi_mapa_brasil(self, modalidade=1, indice_min=0, indice_max=1, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando  informações para gerar mapa do Brasil')
         
@@ -94,10 +93,10 @@ class Mapa:
         geometria_indice = geometria_estados.merge(indice_dos_estados, how='left', left_on='codigo', right_on='codigo_unidade_federativa')
         return self.__constroi_mapa(geometria_indice)
     
-    def constroi_mapa_estado(self, estado = None, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100):
+    def constroi_mapa_estado(self, estado = None, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando  informações para gerar mapa do estado de codigo: {estado}')
-        
+
         indice_municipios = self.repository_banco.buscar_indice_municipios(
             estado=estado,
             peso_p1=peso_p1,
@@ -106,11 +105,12 @@ class Mapa:
             indice_min=indice_min,
             indice_max=indice_max)
                 
+        print(indice_municipios)
         geometria_municipios = self.repository_banco.buscar_geometria_municipios(estado=estado)
         geometria_indice = geometria_municipios.merge(indice_municipios, how='left', left_on='codigo', right_on='codigo_municipio')
         return self.__constroi_mapa(geometria_indice)
         
-    def constroi_mapa_municipio(self, municipio = None, modalidade=1, indice_min=0, indice_max=100, peso_p1=100, peso_p2=100):
+    def constroi_mapa_municipio(self, municipio = None, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
         logger.info(f'Buscando  informações para gerar mapa do município de codigo: {municipio}')
 

@@ -15,7 +15,7 @@ class GraficoBarra:
     logging.basicConfig(level=logging.DEBUG,  
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     
-    def __constroi_grafico_barra(self, dados_grafico: DataFrame, titulo: str) -> go.Figure:
+    def __constroi_grafico_barra(self, dados_grafico: DataFrame, titulo: str, label: str) -> go.Figure:
         
         logger.info(f'Construindo grafico de barras')
 
@@ -24,7 +24,7 @@ class GraficoBarra:
             text_auto='.2f',
             x='nome', 
             y='indice',
-            labels={'nome': 'Estados', 'indice': 'Índice de Conformidade'},
+            labels={'nome': label, 'indice': 'Índice de Conformidade'},
             title=titulo
         )
         
@@ -51,7 +51,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=False)
         indice_brasil = indice_brasil.head(5)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Maiores Índice de Conformidade')
+        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Maiores Índice de Conformidade', 'Estados')
 
     def controi_grafico_brasil_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1):
         
@@ -66,7 +66,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=True)
         indice_brasil = indice_brasil.head(5)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Menores Índice de Conformidade')
+        return self.__constroi_grafico_barra(indice_brasil, 'Estados Com Menores Índice de Conformidade', 'Estados')
 
     def controi_grafico_estado_maior_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado= None):
         
@@ -80,10 +80,11 @@ class GraficoBarra:
                                                         estado=estado
                                                         )
         indice_brasil = pd.DataFrame(indice_brasil)
+        print(indice_brasil)
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=False)
         indice_brasil = indice_brasil.head(10)
         
-        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Maiores Índice de Conformidade')
+        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Maiores Índice de Conformidade', 'Municípios')
 
     def controi_grafico_estado_menor_indice(self, modalidade=1, indice_min=0, indice_max=100, peso_p1=1, peso_p2=1, estado=None):
         
@@ -99,7 +100,7 @@ class GraficoBarra:
         indice_brasil = indice_brasil.sort_values(by='indice', ascending=True)
         indice_brasil = indice_brasil.head(10)
     
-        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Menores Índice de Conformidade')
+        return self.__constroi_grafico_barra(indice_brasil, 'Municípios Com Menores Índice de Conformidade', label = 'Municípios')
     
     def controi_grafico_amenidade_por_regiao(self):
         

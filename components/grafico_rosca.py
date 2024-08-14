@@ -38,6 +38,7 @@ class GraficoRosca:
                 title_text="Análise Hexágonos",
                 title_x=0.5,
                 paper_bgcolor='rgba(0,0,0,0)', 
+                plot_bgcolor='rgba(0,0,0,0)'           
 
         )
         

@@ -62,6 +62,7 @@ class GraficoQueriesConstantes:
             indice
         FROM indice_unidade_federativa
         WHERE codigo_modalidade_transporte = %(modalidade)s
+        AND  codigo_unidade_federativa = %(estado)s
         AND indice > %(indice_min)s AND indice < %(indice_max)s
         '''
    
