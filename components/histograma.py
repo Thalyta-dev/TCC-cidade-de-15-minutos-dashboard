@@ -27,6 +27,7 @@ class Histrograma:
                 x="categoria", 
                 y='contagem', 
                 text_auto=True,
+                log_y=True,
                 color='Categorias',
                 title=titulo,
                 color_discrete_map={
@@ -45,8 +46,7 @@ class Histrograma:
 
         fig.update_layout(
         yaxis=dict(
-            nticks=10,
-            range=[0, max_contagem],
+            nticks=10
         ), 
         )
         return fig

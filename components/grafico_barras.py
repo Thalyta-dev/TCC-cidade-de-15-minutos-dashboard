@@ -127,8 +127,8 @@ class GraficoBarra:
         fig = plot.bar(
             df_amenidade_regiao,
             x='Categoria', 
-            text_auto='.2f',
             y='Quantidade',
+            text_auto=True,
             color='Região', 
             barmode='group',
             labels={'nome': 'Categoria Amenidades', 'quantidade': 'Quantidade Amenidade'},
